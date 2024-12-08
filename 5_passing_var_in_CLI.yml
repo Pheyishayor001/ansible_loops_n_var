@@ -1,0 +1,14 @@
+---
+- name: pass variables through CLI
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  tasks:
+    - name: receive items to install through the CLI
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ target_package }}" #receives the packages to install through the CLI
+
+      # ansible-playbook -i hosts --extra-vars '{"target_package":["git", "httpd", "unzip"]}' playbook.yml

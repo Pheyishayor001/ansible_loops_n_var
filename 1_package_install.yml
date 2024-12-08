@@ -1,0 +1,16 @@
+---
+- name: Package installation
+  hosts: all
+  become: true
+  vars:
+    package_list:
+    - httpd
+    - git
+    - curl
+  tasks:
+    - name: install packages
+      yum: 
+        name: "{{ item }}"
+        state: present
+      loop: "{{ package_list }}"
+

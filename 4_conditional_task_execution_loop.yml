@@ -1,0 +1,19 @@
+---
+- name: check OS type and install packages dynamically
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    package_list:
+    - httpd
+    - git
+    
+  tasks:
+    - name: Install package conditionally
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ package_list }}"
+      when: 
+        - (ansible_facts['distribution'] == "Amazon" and item == "httpd") or (ansible_facts['distribution'] == "Amazon" and item == "git")
+

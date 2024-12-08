@@ -1,0 +1,21 @@
+---
+- name: Working on environment-specific variables and loop
+  hosts: all
+  become: true
+  gather_facts: true
+  vars: 
+    env:
+    - "production"
+    - "development"
+
+    db_host: "{{ 'prod-db.example.com' if  item == 'production' else 'dev-db.example.com' }}"
+  
+    
+  tasks:
+    - name: setting environment specific variable using loops
+      loop: "{{ env }}"
+      debug:
+        msg: 'env is set to "{{ item }}" so db_host is set to "{{ db_host }}" '
+
+
+
